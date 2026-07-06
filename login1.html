@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login & Register App</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    margin:0;
+    background:linear-gradient(135deg,#4facfe,#00c6fb);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.container{
+    background:#fff;
+    width:350px;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 0 15px rgba(0,0,0,0.2);
+    text-align:center;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    background:#2196F3;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    border-radius:6px;
+}
+
+button:hover{
+    background:#1976D2;
+}
+
+.link{
+    color:blue;
+    cursor:pointer;
+    margin-top:15px;
+    display:block;
+}
+
+#message{
+    margin-top:15px;
+    font-weight:bold;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<div id="registerForm">
+
+<h2>Create Account</h2>
+
+<input type="email" id="regEmail" placeholder="Email">
+
+<input type="password" id="regPassword" placeholder="Password">
+
+<button onclick="register()">Register</button>
+
+<span class="link" onclick="showLogin()">Already have an account? Login</span>
+
+</div>
+
+<div id="loginForm" style="display:none;">
+
+<h2>Login</h2>
+
+<input type="email" id="loginEmail" placeholder="Email">
+
+<input type="password" id="loginPassword" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+<span class="link" onclick="showRegister()">Create New Account</span>dic
+<div >
+
+</div>
+
+<p id="message"></p>
+
+</div>
+
+<script>
+
+function showLogin(){
+    document.getElementById("registerForm").style.display="none";
+    document.getElementById("loginForm").style.display="block";
+    document.getElementById("message").innerHTML="";
+}
+
+function showRegister(){
+    document.getElementById("registerForm").style.display="block";
+    document.getElementById("loginForm").style.display="none";
+    document.getElementById("message").innerHTML="";
+}
+
+function register(){
+
+    let email=document.getElementById("regEmail").value.trim();
+    let password=document.getElementById("regPassword").value;
+
+    if(email==="" || password===""){
+        showMessage("Please fill all fields.","red");
+        return;
+    }
+
+    localStorage.setItem("email",email);
+    localStorage.setItem("password",password);
+
+    showMessage("Registration Successful! Please login.","green");
+
+    showLogin();
+}
+
+function login(){
+
+    let email=document.getElementById("loginEmail").value.trim();
+    let password=document.getElementById("loginPassword").value;
+
+    let savedEmail=localStorage.getItem("email");
+    let savedPassword=localStorage.getItem("password");
+
+    if(email===savedEmail && password===savedPassword){
+
+      document.body.innerHTML = `
+<div style="
+    font-family:Arial;
+    text-align:center;
+    background:linear-gradient(135deg,#4facfe,#00c6fb);
+    min-height:100vh;
+    padding-top:50px;
+">
+
+    <h1 style="color:white;">🎉 Welcome!</h1>
+
+    <h2 style="color:white;">${email}</h2>
+
+    <p style="color:white;font-size:20px;">
+        You have logged in successfully.
+    </p>
+
+    <img
+        src="rajasaab.jpg"
+        alt="Welcome Image"
+        style="
+            width:600px;
+            max-width:90%;
+            border-radius:15px;
+            margin-top:40px;
+            box-shadow:0 0 20px rgba(0,0,0,0.4);
+        "
+    >
+
+</div>
+`;
+
+    }else{
+
+        showMessage("Invalid email or password.","red");
+
+    }
+
+}
+
+function showMessage(text,color){
+
+    let msg=document.getElementById("message");
+    msg.innerHTML=text;
+    msg.style.color=color;
+
+}
+
+</script>
+
+</body>
+</html>
